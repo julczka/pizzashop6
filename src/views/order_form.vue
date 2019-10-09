@@ -2,102 +2,90 @@
       <v-app>
       <v-content>
       
-        <v-container class="pa-0"> <!-- fluid === full width design -->
-            
-         
-
-          <v-row  id="header" class="primary"> <!-- no-gutters + dense -->
-
-            <v-col cols="12" sm="6" md="2" > <!-- cols="12" md="4" -->
-
-              <v-row aling="center" justify="center">
-                <a href="index.html" target="_blank"><v-img src="img/Asset_1@0.5x-8.png" max-height="100" contain></a>
-              </v-row>
-              
-            </v-col>
-          <v-spacer></v-spacer>
-            <v-col cols="12" sm="6" md="2" class=" pt-12 justify-space-around  accent" >
-               <v-row class="font-weight-bold justify-space-around primary--text mx-auto"> 
-                 CART</v-row>
-            </v-col>
-          </v-row>
-          
-          
-
-            
-          <v-row id="main" class="secondary"> <!-- no-gutters  -->
-          
-              <v-col class="primary ma-12" col=1>
+        
+            <v-card>  
 
                   <v-form
                   ref="form"
                   v-model="valid"
                   lazy-validation
+                  class="pa-5 ma-0"
                 >
-                  <v-text-field
-                    v-model="name"
-                    :counter="10"
-                    :rules="nameRules"
-                    label="Name"
-                    required
-                  ></v-text-field>
-              
-                  <v-text-field
-                    v-model="email"
-                    :rules="emailRules"
-                    label="E-mail"
-                    required
-                  ></v-text-field>
-              
-                  <v-select
-                    v-model="select"
-                    :items="items"
-                    :rules="[v => !!v || 'Item is required']"
-                    label="Item"
-                    required
-                  ></v-select>
-              
-                  <v-checkbox
-                    v-model="checkbox"
-                    :rules="[v => !!v || 'You must agree to continue!']"
-                    label="Do you agree?"
-                    required
-                  ></v-checkbox>
-              
-                  <v-btn
-                    :disabled="!valid"
-                    color="success"
-                    class="mr-4"
-                    @click="validate"
-                  >
-                    Validate
-                  </v-btn>
-              
-                  <v-btn
-                    color="error"
-                    class="mr-4"
-                    @click="reset"
-                  >
-                    Reset Form
-                  </v-btn>
-              
-                  <v-btn
-                    color="warning"
-                    @click="resetValidation"
-                  >
-                    Reset Validation
-                  </v-btn>
+                      <v-text-field
+                        v-model="name"
+                        :counter="10"
+                        :rules="nameRules"
+                        label="Name"
+                        required
+                      ></v-text-field>
+                  
+                      <v-text-field
+                        v-model="email"
+                        :rules="emailRules"
+                        label="E-mail"
+                        required
+                      ></v-text-field>
+                  
+                      <v-text-field
+                        v-model="phone"
+                        type="number"
+                        :rules="phoneRules"
+                        label="Phone number"
+                        required
+                      ></v-text-field>
+                  
+                      <v-text-field
+                        v-model="address"
+                        :rules="addressRules"
+                        label="Address"
+                        required
+                      ></v-text-field>
+
+
+                      <v-checkbox
+                        v-model="checkbox"
+                        :rules="[v => !!v || 'You must agree to continue!']"
+                        label="Do you agree to sell your soul to pizza?"
+                        required
+                      ></v-checkbox>
+                  
+                      <v-btn
+                        :disabled="!valid"
+                        color="success"
+                        class="mr-4"
+                        @click="validate"
+                      >
+                        Validate
+                      </v-btn>
+                  
+                      <v-btn
+                        color="error"
+                        class="mr-4"
+                        @click="reset"
+                      >
+                        Reset Form
+                      </v-btn>
+                  
+                      <v-btn
+                        color="warning"
+                        @click="resetValidation"
+                      >
+                        Reset Validation
+                      </v-btn>
+
                 </v-form>
 
-              </v-col>
+                </v-card>
+
+              
             
-          </v-row>
+        
 
    
          
         
 
-        </v-container>
+       
       </v-content>
     </v-app>
 </template>
@@ -119,13 +107,18 @@ export default {
         v => !!v || 'E-mail is required',
         v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
       ],
-      select: null,
-      items: [
-        'Item 1',
-        'Item 2',
-        'Item 3',
-        'Item 4',
+      
+      phone: '',
+      phoneRules: [
+        v => !!v || 'Phone is required',
       ],
+
+      address: '',
+      addressRules: [
+        v => !!v || 'Dont you live somewhere, dude?'
+      ],
+
+
       checkbox: false,
     }),
 
@@ -151,49 +144,9 @@ export default {
 
 
 <style>
-  @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
-
-
-  body {
-    font-family: 'Roboto', sans-serif;
-    margin: 0px;
-
-  }
-
-  a {
-    text-decoration: none;
-  }
-
-  #namings {
-    background-color: #F2C779;
-    color: #BE3D06;
-    font-size: 2em;
-
-  }
-
-  #main {
-    height: auto;
-    background-color: #f2c779;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900'%3E%3Cpolygon fill='%23be3d06' points='957 450 539 900 1396 900'/%3E%3Cpolygon fill='%237e5a44' points='957 450 872.9 900 1396 900'/%3E%3Cpolygon fill='%23b25912' points='-60 900 398 662 816 900'/%3E%3Cpolygon fill='%239c6e45' points='337 900 398 662 816 900'/%3E%3Cpolygon fill='%23a56d18' points='1203 546 1552 900 876 900'/%3E%3Cpolygon fill='%23b67f47' points='1203 546 1552 900 1162 900'/%3E%3Cpolygon fill='%23977f1e' points='641 695 886 900 367 900'/%3E%3Cpolygon fill='%23cc8d48' points='587 900 641 695 886 900'/%3E%3Cpolygon fill='%23878e22' points='1710 900 1401 632 1096 900'/%3E%3Cpolygon fill='%23e09b4a' points='1710 900 1401 632 1365 900'/%3E%3Cpolygon fill='%23769c26' points='1210 900 971 687 725 900'/%3E%3Cpolygon fill='%23f2a74b' points='943 900 1210 900 971 687'/%3E%3C/svg%3E");
-    background-attachment: fixed;
-    background-size: cover;
-
-
-
-  }
-
-  .card {
-    font-size: 1.7em;
-    font-weight: 600;
-  }
-
-  #main .product {
-
-    height: auto;
-    background-color: #ffffff;
-    padding: 1em;
-    box-sizing: border-box;
-    color:#7E5A44;
-    font-size: 1em;
-  }
+  
+v-app {
+  height: auto;
+}
+ 
 </style>
