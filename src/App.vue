@@ -73,13 +73,39 @@
 
 
 
-              <div class="product">
-                <H2> CART </H2>
-                <p>your pizzas</p>
-                <p>your pizzas</p>
-                <p>your pizzas</p><p>your pizzas</p><p>your pizzas</p><p>your pizzas</p><p>your pizzas</p><p>your pizzas</p><p>your pizzas</p>
+              <div class="cart primary">
 
-                    <div class="d-flex justify-space-around my-2">
+                
+
+                    <v-simple-table height="auto" class="ma-0 pa-2 overline">
+                        <template v-slot:default>
+                          <thead>
+                            <tr>
+                              <th class="text-left">Product</th>
+                              <th class="text-left">Price</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr v-for="item in items" :key="item.name">
+                              <td>{{ item.name }}</td>
+                              
+                              <td>{{ item.normalPrice }}</td>
+                              
+                            </tr>
+                          </tbody>
+                        </template>
+                      </v-simple-table>
+
+
+                
+
+               
+
+
+
+                      <!-- BUTTON -->
+
+                    <div class="d-flex justify-space-around pb-5 primary">
 
                     <v-dialog v-model="dialog" persistent max-width="600px">
                           <template v-slot:activator="{ on }">
@@ -157,7 +183,7 @@
                     </div>
 
 
-
+                        <!-- BUTTON ENDS HERE -->
 
 
 
