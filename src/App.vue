@@ -11,7 +11,7 @@
             <v-col cols="12" sm="6" md="2" > <!-- cols="12" md="4" -->
 
               <v-row aling="center" justify="center">
-                <a href="index.html" target="_blank"><v-img src="https://picsum.photos/510/300?random" max-height="100" contain></v-img></a>
+                <a href="index.html" target="_blank"><v-img src="./assets/logo.png" max-height="100" contain></v-img></a>
               </v-row>
 
             </v-col>
@@ -74,9 +74,9 @@
                 <H2> CART </H2>
                 <p>your pizzas</p>
                 <div class="d-flex justify-space-around my-2">
-                  <a href="order.html" target="_blank">
+                  <router-link to="/order_form"> 
                     <v-btn color="error" dark large>check out</v-btn>
-                  </a>
+                  </router-link>
                 </div>
               </div>
             </v-col>

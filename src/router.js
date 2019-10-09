@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
+import order_form from './views/order_form.vue'
 
 Vue.use(Router)
 
@@ -13,6 +14,13 @@ export default new Router({
       name: 'home',
       component: Home
     },
+
+    {
+      path: '/',
+      name: 'order_form',
+      component: order_form
+    },
+
     {
       path: '/about',
       name: 'about',
