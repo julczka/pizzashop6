@@ -52,10 +52,31 @@
             </v-col>
             <v-col cols="12" md="6" class="accent--text">
 
-              <div class="card">MENU</div>
 
+              <!-- PRODUCT CARD 2 -->
+
+              <div class="card">DRINKS</div>
+              <div class="product" v-for="item in items2" v-bind:key="item.id">
+                <H2> {{ item.name }} </H2>
+                <v-row class="justify-space-between px-3">
+                  <p>SMALL</p>
+                  <div class="d-flex">
+                    <p class="px-4">{{item.price}}$</p>
+                    <v-btn @click="addToBaskedPrice(item)" x-small color="accent">
+                      <v-icon x-small>fa-cart-plus</v-icon>
+                    </v-btn>
+                  </div>
+                </v-row>
+
+                <v-divider></v-divider>
+              </div>
+
+              <!-- PRODUCT CARD 2 END -->
+
+              <!-- PRODUCT CARD 1 -->
+
+              <div class="card">PIZZAS</div>
               <div class="product" v-for="item in items" v-bind:key="item.id">
-
                 <H2> {{ item.name }} </H2>
                 <p>{{ item.toppings }}</p>
                 <v-row class="justify-space-between px-3">
@@ -66,7 +87,6 @@
                       <v-icon x-small>fa-cart-plus</v-icon>
                     </v-btn>
                   </div>
-
                 </v-row>
                 <v-row class="justify-space-between px-3">
                   <p>MEDIUM</p>
@@ -75,12 +95,39 @@
                     <v-btn @click="addToBaskedFamily(item)" x-small color="accent"><v-icon x-small>fa-cart-plus</v-icon></v-btn>
                   </div>
                 </v-row>
-
-
                 <v-divider></v-divider>
-
               </div>
 
+              <!-- PRODUCT CARD 1 END -->
+
+
+
+              <!-- PRODUCT CARD 1 -->
+
+              <div class="card">FASTFOOD</div>
+              <div class="product" v-for="item in items3" v-bind:key="item.id">
+                <H2> {{ item.name }} </H2>
+
+                <v-row class="justify-space-between px-3">
+                  <p>SMALL</p>
+                  <div class="d-flex">
+                    <p class="px-4">{{item.smallPrice}}$</p>
+                    <v-btn @click="addToBaskedSmall(item)" x-small color="accent">
+                      <v-icon x-small>fa-cart-plus</v-icon>
+                    </v-btn>
+                  </div>
+                </v-row>
+                <v-row class="justify-space-between px-3">
+                  <p>MEDIUM</p>
+                  <div class="d-flex">
+                    <p class="px-4">{{item.largePrice}}$</p>
+                    <v-btn @click="addToBaskedLarge(item)" x-small color="accent"><v-icon x-small>fa-cart-plus</v-icon></v-btn>
+                  </div>
+                </v-row>
+                <v-divider></v-divider>
+              </div>
+
+              <!-- PRODUCT CARD 3 END -->
 
             </v-col>
             <v-col id="basket" cols="12" md="3" class="accent--text">
@@ -170,36 +217,16 @@
                             <v-card-actions>
                               <div class="flex-grow-1"></div>
                               <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-                              <v-btn color="blue darken-1" text @click="dialog = false">Save</v-btn>
+
+
+                              <v-btn color="blue darken-1" text @click="dialog = false" v-on:click="submitOrder()">Save</v-btn>
+
+
                             </v-card-actions>
                           </v-card>
                         </v-dialog>
 
-                    <!--
-                    <v-dialog 
-                          v-model="dialog"
-                          width="500"
-                        >
-                          <template v-slot:activator="{ on }">
-                          <router-link to="/order_form"> 
-                            <v-btn
-                              color="error"
-                              
-                              v-on="on"
-                            > 
-                                    
-                                    
-                              Your order
-                            </v-btn>
-                            </router-link>
-                          </template>
 
-                          <v-card>
-                            <router-view></router-view>
-                          </v-card>
-                        </v-dialog>
-
-                        -->
 
 
                     </div>
@@ -210,27 +237,6 @@
 
 
 
-  <!--
-                  <div class="d-flex justify-space-around my-2">
-                    <router-link to="/order_form"> 
-                      <v-btn @click="overlay = !overlay" color="error" dark large>check out</v-btn>
-                    </router-link>
-                      <v-overlay :value="overlay">
-                        <router-view></router-view>
-                            <v-btn
-                              icon
-                              @click="overlay = false"
-                            >
-
-                                    <v-icon>mdi-close</v-icon>
-                            
-                            </v-btn>
-                          </v-overlay>
-                    
-                    
-                  </div>
-
-  -->
 
                 </div>
                 
@@ -258,34 +264,51 @@ import axios from 'axios'
     components: {},
     mounted(){
       this.getData();
+      this.getDataDrinks();
+      this.getDataFastFood();
 
     },
     data () {
       return {
         items: [],
+        items2: [],
+        items3: [],
         basketDump:[],
         Name: '',
         Email: '',
         PhoneNumber: '',
         Address: '',
         Message: '',
-        overlay: false,
-        dialog: false,
+        //overlay: false,
+        //dialog: false,
       }
-      
     },
+
     methods:{
       getData(){
         axios.get('https://pizzashop00.azurewebsites.net/api/pizzas').then(data => {this.items = data.data})
+
+      },
+      getDataDrinks(){
+        axios.get('https://pizzashop00.azurewebsites.net/api/drinks').then(data =>{this.items2 = data.data})
+      },
+      getDataFastFood(){
+        axios.get('https://pizzashop00.azurewebsites.net/api/fastfoods').then(data =>{this.items3 = data.data})
       },
       addToBaskedNormal(item){
         this.basketDump.push({id: item.id, name:item.name, price:item.normalPrice});
-
-
-
       },
       addToBaskedFamily(item){
         this.basketDump.push({id: item.id, name:item.name, price:item.familyPrice});
+      },
+      addToBaskedLarge(item){
+        this.basketDump.push({id: item.id, name:item.name, price:item.largePrice});
+      },
+      addToBaskedSmall(item){
+        this.basketDump.push({id: item.id, name:item.name, price:item.smallPrice});
+      },
+      addToBaskedPrice(item){
+        this.basketDump.push({id: item.id, name:item.name, price:item.price});
       },
       sum(){
         var sumValue = 0;
@@ -305,8 +328,16 @@ import axios from 'axios'
           this.basketDump.splice(found, 1)
         }
 
+      },
+      submitOrder(){
+        axios.post("https://pizzashop00.azurewebsites.net/api/order", {
+          name: this.name,
+          email: this.email,
+          phoneNumber: this.phoneNumber,
+          address: this.address,
+          message: this.message
+        })
       }
-
 
     }
 

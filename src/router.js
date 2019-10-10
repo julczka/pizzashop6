@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import order_form from "./views/order_form"
 
 Vue.use(Router)
 
@@ -11,11 +10,6 @@ export default new Router({
   routes: [
    
 
-    {
-      path: '/order_form',
-      name: 'order_form',
-      component: order_form
-    },
 
     {
       path: '/about',
