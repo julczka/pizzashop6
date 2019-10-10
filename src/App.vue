@@ -18,7 +18,22 @@
             <v-spacer></v-spacer>
             <v-col cols="12" sm="6" md="2" class=" pt-12 justify-space-around  accent" >
               <v-row class="font-weight-bold justify-space-around primary--text mx-auto">
-                CART</v-row>
+
+                <v-badge
+                        v-model="show"
+                        color="error"
+                        left
+                >
+                  <template v-slot:badge>
+                    <span>{{ numberOfItems() }}</span>
+                  </template>
+                  <v-icon
+                          large
+                          color="primary"
+                  >mdi-cart</v-icon>
+                </v-badge>
+
+                 {{ sum() }}$</v-row>
             </v-col>
           </v-row>
 
@@ -86,14 +101,17 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <tr v-for="item in basketDump" :key="item.id">
+                            <tr v-for="(item, index) in basketDump" :key="item.id">
                               <td>{{ item.name }}</td>
                               
-                              <td>{{ item.price  }}</td>
-                              
+                              <td>{{ item.price  }}$</td>
+                              <v-btn @click="removeFromBasket(item, index)" fab x-small class=" mt-2 accent">
+                                <v-icon>fa-minus</v-icon>
+                              </v-btn>
                             </tr>
                             <tr >
-                              <td>{{ sum() }}</td>
+                              <td class="font-weight-black" >TOTAL</td>
+                              <td class="font-weight-black" >{{ sum() }}$</td>
 
                             </tr>
                           </tbody>
@@ -275,7 +293,21 @@ import axios from 'axios'
           sumValue += item.price;
         });
         return sumValue;
+      },
+      numberOfItems(){
+       return this.basketDump.length
+      },
+      removeFromBasket: function(item, index){
+        if(this.basketDump[index]===item){
+          this.basketDump.splice(index, 1)
+        } else{
+          let found = this.basketDump.indexOf(item)
+          this.basketDump.splice(found, 1)
+        }
+
       }
+
+
     }
 
   };
