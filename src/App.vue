@@ -47,7 +47,7 @@
                   <p>SMALL</p>
                   <div class="d-flex">
                     <p class="px-4">{{item.normalPrice}}$</p>
-                    <v-btn x-small color="accent">
+                    <v-btn @click="addToBasked" x-small color="accent">
                       <v-icon x-small>fa-cart-plus</v-icon>
                     </v-btn>
                   </div>
@@ -86,10 +86,10 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <tr v-for="item in items" :key="item.name">
+                            <tr v-for="item in basketDump" :key="item.id">
                               <td>{{ item.name }}</td>
                               
-                              <td>{{ item.normalPrice }}</td>
+                              <!--<td>{{ item.price }}</td> -->
                               
                             </tr>
                           </tbody>
@@ -241,6 +241,7 @@ import axios from 'axios'
     data () {
       return {
         items: [],
+        basketDump:[],
         Name: '',
         Email: '',
         PhoneNumber: '',
@@ -254,6 +255,13 @@ import axios from 'axios'
     methods:{
       getData(){
         axios.get('https://pizzashop00.azurewebsites.net/api/pizzas').then(data => {this.items = data.data})
+      },
+      addToBasked(item){
+        this.BasketDump.push({
+          id: item.id,
+          name: item.name
+
+        })
       }
     }
 
