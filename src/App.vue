@@ -47,7 +47,7 @@
                   <p>SMALL</p>
                   <div class="d-flex">
                     <p class="px-4">{{item.normalPrice}}$</p>
-                    <v-btn @click="addToBasked" x-small color="accent">
+                    <v-btn @click="addToBaskedNormal(item)" x-small color="accent">
                       <v-icon x-small>fa-cart-plus</v-icon>
                     </v-btn>
                   </div>
@@ -57,7 +57,7 @@
                   <p>MEDIUM</p>
                   <div class="d-flex">
                     <p class="px-4">{{item.familyPrice}}$</p>
-                    <v-btn x-small color="accent"><v-icon x-small>fa-cart-plus</v-icon></v-btn>
+                    <v-btn @click="addToBaskedFamily(item)" x-small color="accent"><v-icon x-small>fa-cart-plus</v-icon></v-btn>
                   </div>
                 </v-row>
 
@@ -89,8 +89,12 @@
                             <tr v-for="item in basketDump" :key="item.id">
                               <td>{{ item.name }}</td>
                               
-                              <!--<td>{{ item.price }}</td> -->
+                              <td>{{ item.price  }}</td>
                               
+                            </tr>
+                            <tr >
+                              <td>{{ sum() }}</td>
+
                             </tr>
                           </tbody>
                         </template>
@@ -256,12 +260,21 @@ import axios from 'axios'
       getData(){
         axios.get('https://pizzashop00.azurewebsites.net/api/pizzas').then(data => {this.items = data.data})
       },
-      addToBasked(item){
-        this.BasketDump.push({
-          id: item.id,
-          name: item.name
+      addToBaskedNormal(item){
+        this.basketDump.push({id: item.id, name:item.name, price:item.normalPrice});
 
-        })
+
+
+      },
+      addToBaskedFamily(item){
+        this.basketDump.push({id: item.id, name:item.name, price:item.familyPrice});
+      },
+      sum(){
+        var sumValue = 0;
+        this.basketDump.forEach(item => {
+          sumValue += item.price;
+        });
+        return sumValue;
       }
     }
 
